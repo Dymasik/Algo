@@ -22,6 +22,23 @@ public class DFS {
         }
     }
 
+    public DFS(Digraph g, int s){
+        this.s = s;
+        edgeTo = new int[g.V()];
+        used = new boolean[g.V()];
+        dfs(g, s);
+    }
+
+    private void dfs(Digraph g, int v){
+        used[v] = true;
+        for(int w: g.adj(v)){
+            if(!used[w]){
+                edgeTo[w] = v;
+                dfs(g, w);
+            }
+        }
+    }
+
     public boolean hasPathTo(int v){
         return used[v];
     }

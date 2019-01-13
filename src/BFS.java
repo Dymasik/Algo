@@ -37,6 +37,34 @@ public class BFS {
         }
     }
 
+    public BFS(Digraph g, int s){
+        this.s = s;
+        used = new boolean[g.V()];
+        dist = new int[g.V()];
+        edgeTo = new int[g.V()];
+        for(int i = 0; i < g.V(); i++)
+            dist[i] = Integer.MAX_VALUE;
+        bfs(g);
+    }
+
+    private void bfs(Digraph g){
+        LinkedList<Integer> queue = new LinkedList<>();
+        queue.add(s);
+        used[s] = true;
+        dist[s] = 0;
+        while(!queue.isEmpty()){
+            int v = queue.poll();
+            for(int w: g.adj(v)){
+                if(!used[w]){
+                    edgeTo[w] = v;
+                    used[w] = true;
+                    dist[w] = dist[v] + 1;
+                    queue.add(w);
+                }
+            }
+        }
+    }
+
     public boolean hasPathTo(int v){
         return used[v];
     }
